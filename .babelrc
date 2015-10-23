@@ -1,0 +1,4 @@
+{
+  "jsxPragma": "el",
+  "optional": ["es7.objectRestSpread"]
+}

@@ -1,0 +1,54 @@
+{
+  "name": "render-jsonld",
+  "version": "1.0.0",
+  "description": "render JSON-LD and provide links",
+  "main": "index.js",
+  "scripts": {
+    "start": "budo index.js -d --serve bundle.js --live",
+    "build": "browserify index.js -o bundle.js -g uglifyify",
+    "test": "browserify test.js | smokestack | tap-spec",
+    "dist": "mkdir -p dist && bash -c 'cp *.{js,html,css} dist'",
+    "push": "gh-pages -d dist",
+    "deploy": "npm run build && npm run dist && npm run push"
+  },
+  "browserify": {
+    "transform": [
+      "babelify"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ahdinosaur/render-jsonld"
+  },
+  "author": "ahdinosaur",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ahdinosaur/render-jsonld/issues"
+  },
+  "homepage": "https://github.com/ahdinosaur/render-jsonld",
+  "dependencies": {
+    "babelify": "^6.4.0",
+    "create-action-types": "^2.0.0",
+    "jsonld": "^0.4.2",
+    "redux": "^3.0.3",
+    "redux-actions": "^0.8.0",
+    "redux-effects": "^0.4.0",
+    "redux-effects-events": "^0.2.5",
+    "redux-effects-fetch": "^0.3.3",
+    "redux-logger": "^2.0.4",
+    "redux-multi": "^0.1.9",
+    "vdom-element": "^0.2.3",
+    "vdux": "^0.1.8",
+    "virtual-component": "^0.2.5"
+  },
+  "devDependencies": {
+    "browserify": "^10.0.0",
+    "budo": "^4.0.0",
+    "gh-pages": "^0.3.0",
+    "smokestack": "^3.3.0",
+    "tap-spec": "^4.0.2",
+    "tape": "^4.0.0",
+    "uglifyify": "^3.0.1",
+    "watchify": "^3.1.0"
+  }
+}
