@@ -1,7 +1,7 @@
 {
-  "name": "render-jsonld",
-  "version": "1.0.0",
-  "description": "render JSON-LD and provide links",
+  "name": "linked-data-browser",
+  "version": "0.0.0",
+  "description": "browse through linked data graphs",
   "main": "index.js",
   "scripts": {
     "start": "budo index.js -d --serve bundle.js --live",
@@ -18,14 +18,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/ahdinosaur/render-jsonld"
+    "url": "https://github.com/ahdinosaur/linked-data-browser"
   },
   "author": "ahdinosaur",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/ahdinosaur/render-jsonld/issues"
+    "url": "https://github.com/ahdinosaur/linked-data-browser/issues"
   },
-  "homepage": "https://github.com/ahdinosaur/render-jsonld",
+  "homepage": "https://github.com/ahdinosaur/linked-data-browser",
   "dependencies": {
     "babelify": "^6.4.0",
     "create-action-types": "^2.0.0",

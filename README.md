@@ -1,15 +1,14 @@
+# linked-data-browser
 
-# render-jsonld
-
-render JSON-LD and provide links
+browse through linked data graphs
 
 ## how
 
 ### install
 
 ```
-git clone https://github.com/ahdinosaur/render-jsonld
-cd 
+git clone https://github.com/ahdinosaur/linked-data-browser
+cd linked-data-browser
 npm install
 ```
 
