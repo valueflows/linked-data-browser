@@ -13,14 +13,13 @@ function beforeUpdate (prevProps, nextProps) {
 }
 
 function render (props) {
-  console.log("render", props)
   const { resourceId, resource, loading } = props
 
   return (
     <div>
       <div>{ resourceId }</div>
       <div>{ JSON.stringify(resource, null, 2) }</div>
-      <div>{ loading }</div>
+      <div>{ String(loading) }</div>
     </div>
   )
 }

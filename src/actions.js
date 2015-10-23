@@ -12,12 +12,10 @@ const erroredResource = createAction(actionTypes.ERRORED_RESOURCE)
 
 function fetchResource (id) {
   return [
-    requestResource(),
+    requestResource(id),
     bind(
       fetch(id),
-      json => {
-        receiveResource(json.data)
-      },
+      receiveResource,
       erroredResource
     )
   ]

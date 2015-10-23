@@ -13,7 +13,7 @@ const middleware = [
   effects,
   events(),
   fetch,
-  logger
+  logger()
 ]
 
 function configureStore (initialState) {
