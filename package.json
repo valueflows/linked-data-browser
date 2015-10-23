@@ -34,7 +34,7 @@
     "redux-actions": "^0.8.0",
     "redux-effects": "^0.4.0",
     "redux-effects-events": "^0.2.5",
-    "redux-effects-fetch": "^0.3.3",
+    "redux-effects-fetch": "github:ahdinosaur/redux-effects-fetch",
     "redux-logger": "^2.0.4",
     "redux-multi": "^0.1.9",
     "vdom-element": "^0.2.3",

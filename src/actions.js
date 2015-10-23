@@ -15,12 +15,7 @@ function fetchResource (id) {
     requestResource(id),
     bind(
       fetch(id),
-      json => {
-        if (typeof json === 'string') {
-          json = JSON.parse(json)
-        }
-        return receiveResource(json)
-      },
+      receiveResource,
       erroredResource
     )
   ]
