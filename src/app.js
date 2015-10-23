@@ -29,7 +29,9 @@ function render (props) {
       ) : loading ? (
         <div>loading...</div>
       ) : (
-        <div>{ JSON.stringify(resource, null, 2) }</div>
+        <code><pre>
+          { JSON.stringify(resource, null, 2) }
+        </pre></code>
       )}
     </div>
   )
