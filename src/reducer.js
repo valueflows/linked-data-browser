@@ -17,7 +17,8 @@ const reducer = handleActions({
   REQUEST_RESOURCE: (state, action) => {
     return {
       ...state,
-      loading: true
+      loading: true,
+      error: null
     }
   },
   RECEIVE_RESOURCE: (state, action) => {
