@@ -5,32 +5,32 @@ import { parse } from './effects/parse'
 
 import actionTypes from './action-types'
 
-const selectResource = createAction(actionTypes.SELECT_RESOURCE)
+const selectGraph = createAction(actionTypes.SELECT_GRAPH)
 
-const requestResource = createAction(actionTypes.REQUEST_RESOURCE)
-const receiveResource = createAction(actionTypes.RECEIVE_RESOURCE)
-const erroredResource = createAction(actionTypes.ERRORED_RESOURCE)
+const requestGraph = createAction(actionTypes.REQUEST_GRAPH)
+const receiveGraph = createAction(actionTypes.RECEIVE_GRAPH)
+const erroredGraph = createAction(actionTypes.ERRORED_GRAPH)
 
-function fetchResource (id) {
+function fetchGraph (id) {
   return [
-    requestResource(id),
+    requestGraph(id),
     bind(
       fetch(id),
-      parseResource,
-      erroredResource
+      parseGraph,
+      erroredGraph
     )
   ]
 }
 
-function parseResource (data) {
+function parseGraph (data) {
   return bind(
     parse(data),
-    receiveResource,
-    erroredResource
+    receiveGraph,
+    erroredGraph
   )
 }
 
 module.exports = {
-  selectResource,
-  fetchResource
+  selectGraph,
+  fetchGraph
 }

@@ -1,10 +1,10 @@
 import createActionTypes from 'create-action-types'
 
 const actionTypes = createActionTypes([
-  'SELECT_RESOURCE',
-  'REQUEST_RESOURCE',
-  'RECEIVE_RESOURCE',
-  'ERRORED_RESOURCE'
+  'SELECT_GRAPH',
+  'REQUEST_GRAPH',
+  'RECEIVE_GRAPH',
+  'ERRORED_GRAPH'
 ])
 
 module.exports = actionTypes

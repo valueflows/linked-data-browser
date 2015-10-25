@@ -7,8 +7,8 @@ import createStore from './store'
 import App from './app'
 
 const store = createStore({
-  resourceId: 'https://rawgit.com/valueflows/agent/master/examples/enspiral.jsonld',
-  resource: null
+  graphId: 'https://rawgit.com/valueflows/agent/master/examples/enspiral.jsonld',
+  graph: null
 })
 
 store.dispatch(handleOnce('domready', () => {

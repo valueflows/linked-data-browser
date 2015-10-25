@@ -1,37 +1,36 @@
 import el from 'vdom-element'
 
-import { selectResource, fetchResource } from './actions'
+import { selectGraph, fetchGraph } from './actions'
 import UrlInput from './components/url-input'
+import GraphTable from './components/graph-table'
 
 function beforeMount (props) {
-  return fetchResource(props.resourceId)
+  return fetchGraph(props.graphId)
 }
 
 function beforeUpdate (prevProps, nextProps) {
-  if (prevProps.resourceId !== nextProps.resourceId) {
-    return fetchResource(nextProps.resourceId)
+  if (prevProps.graphId !== nextProps.graphId) {
+    return fetchGraph(nextProps.graphId)
   }
 }
 
 function render (props) {
-  const { resourceId, resource, loading, error } = props
+  const { graphId, graph, loading, error } = props
 
   return (
     <div>
       <UrlInput
-        key="resourceId"
-        value={resourceId}
-        label="@id"
-        onChange={selectResource}
+        key="graphId"
+        value={graphId}
+        label="graph @id: "
+        onChange={selectGraph}
       />
       { error ? (
         <div>error!</div>
       ) : loading ? (
         <div>loading...</div>
       ) : (
-        <code><pre>
-          { resource ? resource.toString() : '' }
-        </pre></code>
+        <GraphTable graph={graph} />
       )}
     </div>
   )
