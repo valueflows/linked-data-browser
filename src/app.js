@@ -30,7 +30,7 @@ function render (props) {
         <div>loading...</div>
       ) : (
         <code><pre>
-          { JSON.stringify(resource, null, 2) }
+          { resource ? resource.toString() : '' }
         </pre></code>
       )}
     </div>

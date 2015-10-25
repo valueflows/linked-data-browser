@@ -2,7 +2,8 @@ import { createStore, applyMiddleware } from 'redux'
 import reducer from './reducer'
 import effects from 'redux-effects'
 import events from 'redux-effects-events'
-import fetch from 'redux-effects-fetch'
+import fetch from './effects/fetch'
+import parse from './effects/parse'
 import multi from 'redux-multi'
 import logger from 'redux-logger'
 
@@ -13,6 +14,7 @@ const middleware = [
   effects,
   events(),
   fetch,
+  parse,
   logger()
 ]
 

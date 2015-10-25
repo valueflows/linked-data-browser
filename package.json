@@ -30,6 +30,8 @@
     "babelify": "^6.4.0",
     "create-action-types": "^2.0.0",
     "jsonld": "^0.4.2",
+    "rdf-ext": "^0.2.6",
+    "read-blob": "^1.1.0",
     "redux": "^3.0.3",
     "redux-actions": "^0.8.0",
     "redux-effects": "^0.4.0",

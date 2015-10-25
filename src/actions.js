@@ -1,6 +1,7 @@
 import { createAction } from 'redux-actions'
 import { bind } from 'redux-effects'
-import { fetch } from 'redux-effects-fetch'
+import { fetch } from './effects/fetch'
+import { parse } from './effects/parse'
 
 import actionTypes from './action-types'
 
@@ -15,10 +16,18 @@ function fetchResource (id) {
     requestResource(id),
     bind(
       fetch(id),
-      receiveResource,
+      parseResource,
       erroredResource
     )
   ]
+}
+
+function parseResource (data) {
+  return bind(
+    parse(data),
+    receiveResource,
+    erroredResource
+  )
 }
 
 module.exports = {
