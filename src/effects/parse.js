@@ -27,7 +27,7 @@ function parserByFormat (format) {
         .then(parserByFormat('application/n-quads'))
         .then((graph) => {
           return {
-            triples: graph.triples,
+            quads: graph.quads,
             prefixes: context
           }
         })
@@ -40,16 +40,21 @@ function parserByFormat (format) {
       var parser = N3Parser({ format })
       return (text) => {
         return new Promise((resolve, reject) => {
-          var triples = []
-          parser.parse(text, (err, triple, prefixes) => {
+          var quads = []
+          parser.parse(text, (err, quad, prefixes) => {
             if (err) { return reject(err) }
-            if (triple) {
-              triples.push(triple)
+            if (quad) {
+              quads.push(quad)
             } else {
-              resolve({ triples, prefixes })
+              resolve({ quads, prefixes })
             }
           })
         })
+      }
+
+    default:
+      return text => {
+        return { quads: [], prefixes: {} }
       }
   }
 }

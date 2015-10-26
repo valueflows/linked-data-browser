@@ -5,16 +5,28 @@ import el from 'vdom-element'
 
 import createStore from './store'
 import App from './app'
+import { getProps } from './getters'
 
 const store = createStore({
   focusId: 'https://rawgit.com/valueflows/agent/master/examples/enspiral.jsonld',
-  triples: [],
-  prefixes: {}
+  quads: [],
+  prefixes: {},
+  /*
+  view: 'quads-table',
+  views: views
+  */
 })
 
 store.dispatch(handleOnce('domready', () => {
   listen(store.dispatch)
-  vdux(store, (state) => {
-    return <App { ...state } />
-  }, document.body)
+
+  vdux(
+    store,
+    (state) => {
+      const props = getProps(state) 
+      console.log("props", props)
+      return <App { ...props } />
+    },
+    document.body
+  )
 }))

@@ -1,9 +1,9 @@
 import el from 'vdom-element'
 
-import { getStore } from './getters'
+import { getReasoner } from './getters'
 import { selectFocus, fetchGraph } from './actions'
 import UrlInput from './components/url-input'
-import GraphTable from './components/graph-table'
+import QuadsTable from './components/quads-table'
 
 function beforeMount (props) {
   return fetchGraph(props.focusId)
@@ -16,9 +16,7 @@ function beforeUpdate (prevProps, nextProps) {
 }
 
 function render (props) {
-  const { focusId, graph, loading, error } = props
-
-  const store = getStore(props)
+  const { focusId, quads, loading, error } = props
 
   return (
     <div>
@@ -33,7 +31,7 @@ function render (props) {
       ) : loading ? (
         <div>loading...</div>
       ) : (
-        <GraphTable graph={store} />
+        <QuadsTable { ...props }/>
       )}
     </div>
   )

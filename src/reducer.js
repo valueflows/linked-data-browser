@@ -24,7 +24,7 @@ const reducer = handleActions({
   RECEIVE_GRAPH: (state, action) => {
     return {
       ...state,
-      triples: state.triples.concat(action.payload.triples),
+      quads: state.quads.concat(action.payload.quads),
       prefixes: Object.assign({}, state.prefixes, action.payload.prefixes),
       loading: false
     }

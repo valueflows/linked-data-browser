@@ -2,16 +2,13 @@ import el from 'vdom-element'
 import { Util as N3Util } from 'n3'
 
 function render (props) {
-  const { graph } = props
+  const { quads, prefixes } = props
 
-  let prefix
-  if (graph) {
-    prefix = prefixer(graph._prefixes)
-  }
+  let prefix = prefixer(prefixes)
 
   return (
-    <div class="GraphTable-container">
-      <table class="GraphTable-table">
+    <div class="QuadsTable-container">
+      <table class="QuadsTable-table">
         <thead>
           <tr>
             <td class="subject">subject</td>
@@ -21,7 +18,7 @@ function render (props) {
           </tr>
         </thead>
         <tbody>
-          { graph ? graph.find().map(function (quad) {
+          { quads ? quads.map(function (quad) {
               return <tr>
                 <td class="subject">{ prefix(quad.subject) }</td>
                 <td class="predicate">{ prefix(quad.predicate) }</td>
@@ -36,6 +33,8 @@ function render (props) {
 }
 
 function prefixer (prefixes) {
+  prefixes = prefixes || {}
+
   return (value) => {
     if (!N3Util.isIRI(value)) {
       return value
