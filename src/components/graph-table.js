@@ -1,7 +1,13 @@
 import el from 'vdom-element'
+import { Util as N3Util } from 'n3'
 
 function render (props) {
   const { graph } = props
+
+  let prefix
+  if (graph) {
+    prefix = prefixer(graph._prefixes)
+  }
 
   return (
     <div class="GraphTable-container">
@@ -15,12 +21,12 @@ function render (props) {
           </tr>
         </thead>
         <tbody>
-          { graph ? graph.map(function (quad) {
+          { graph ? graph.find().map(function (quad) {
               return <tr>
-                <td class="subject">{ toString(quad.subject) }</td>
-                <td class="predicate">{ toString(quad.predicate) }</td>
-                <td class="object">{ toString(quad.object) }</td>
-                <td class="graph">{ toString(quad.graph) }</td>
+                <td class="subject">{ prefix(quad.subject) }</td>
+                <td class="predicate">{ prefix(quad.predicate) }</td>
+                <td class="object">{ prefix(quad.object) }</td>
+                <td class="graph">{ prefix(quad.graph) }</td>
               </tr>
           }) : null }
         </tbody>
@@ -29,8 +35,22 @@ function render (props) {
   )
 }
 
-function toString (value) {
-  return value ? value.toString() : ''
+function prefixer (prefixes) {
+  return (value) => {
+    if (!N3Util.isIRI(value)) {
+      return value
+    }
+    Object.keys(prefixes).forEach((prefix) => {
+      const expanded = prefixes[prefix]
+      const prefixIndex = value.indexOf(expanded)
+      if (prefixIndex === 0) {
+        let sub = value.substr(expanded.length)
+        if (!sub) value = prefix
+        else value = `${prefix}:${sub}`
+      }
+    })
+    return value
+  }
 }
 
 module.exports = { render }
