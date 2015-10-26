@@ -29,6 +29,7 @@ const reducer = handleActions({
     }
   },
   ERRORED_GRAPH: (state, action) => {
+    console.error(action.payload)
     return {
       ...state,
       error: action.payload
