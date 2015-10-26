@@ -1,36 +1,39 @@
 import el from 'vdom-element'
 
-import { selectGraph, fetchGraph } from './actions'
+import { getStore } from './getters'
+import { selectFocus, fetchGraph } from './actions'
 import UrlInput from './components/url-input'
 import GraphTable from './components/graph-table'
 
 function beforeMount (props) {
-  return fetchGraph(props.graphId)
+  return fetchGraph(props.focusId)
 }
 
 function beforeUpdate (prevProps, nextProps) {
-  if (prevProps.graphId !== nextProps.graphId) {
-    return fetchGraph(nextProps.graphId)
+  if (prevProps.focusId !== nextProps.focusId) {
+    return fetchGraph(nextProps.focusId)
   }
 }
 
 function render (props) {
-  const { graphId, graph, loading, error } = props
+  const { focusId, graph, loading, error } = props
+
+  const store = getStore(props)
 
   return (
     <div>
       <UrlInput
-        key="graphId"
-        value={graphId}
-        label="graph @id: "
-        onChange={selectGraph}
+        key="focusId"
+        value={focusId}
+        label="@id: "
+        onChange={selectFocus}
       />
       { error ? (
         <div>error!</div>
       ) : loading ? (
         <div>loading...</div>
       ) : (
-        <GraphTable graph={graph} />
+        <GraphTable graph={store} />
       )}
     </div>
   )

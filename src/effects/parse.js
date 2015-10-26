@@ -22,13 +22,14 @@ function parserByFormat (format) {
         return processContext(json['@context'])
         .then((ctx) => {
           json['@context'] = context = ctx
-          console.log("json", json)
           return JsonLd.toRDF(json, { format: 'application/nquads' })
         })
         .then(parserByFormat('application/n-quads'))
         .then((graph) => {
-          graph.addPrefixes(context)
-          return graph
+          return {
+            triples: graph.triples,
+            prefixes: context
+          }
         })
       }
 
@@ -45,7 +46,7 @@ function parserByFormat (format) {
             if (triple) {
               triples.push(triple)
             } else {
-              resolve(N3Store(triples, { prefixes }))
+              resolve({ triples, prefixes })
             }
           })
         })

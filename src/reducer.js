@@ -1,17 +1,17 @@
 import { handleActions } from 'redux-actions'
 
 const {
-  SELECT_GRAPH,
+  SELECT_FOCUS,
   REQUEST_GRAPH,
   RECEIVE_GRAPH,
-  ERRORED_GRAPH
+  SET_ERROR
 } = require('./action-types')
 
 const reducer = handleActions({
-  SELECT_GRAPH: (state, action) => {
+  SELECT_FOCUS: (state, action) => {
     return {
       ...state,
-      graphId: action.payload
+      focusId: action.payload
     }
   },
   REQUEST_GRAPH: (state, action) => {
@@ -24,11 +24,12 @@ const reducer = handleActions({
   RECEIVE_GRAPH: (state, action) => {
     return {
       ...state,
-      graph: action.payload,
+      triples: state.triples.concat(action.payload.triples),
+      prefixes: Object.assign({}, state.prefixes, action.payload.prefixes),
       loading: false
     }
   },
-  ERRORED_GRAPH: (state, action) => {
+  SET_ERROR: (state, action) => {
     console.error(action.payload)
     return {
       ...state,

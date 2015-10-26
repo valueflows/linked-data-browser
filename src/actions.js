@@ -5,11 +5,11 @@ import { parse } from './effects/parse'
 
 import actionTypes from './action-types'
 
-const selectGraph = createAction(actionTypes.SELECT_GRAPH)
+const selectFocus = createAction(actionTypes.SELECT_FOCUS)
 
 const requestGraph = createAction(actionTypes.REQUEST_GRAPH)
 const receiveGraph = createAction(actionTypes.RECEIVE_GRAPH)
-const erroredGraph = createAction(actionTypes.ERRORED_GRAPH)
+const setError = createAction(actionTypes.SET_ERROR)
 
 function fetchGraph (id) {
   return [
@@ -17,7 +17,7 @@ function fetchGraph (id) {
     bind(
       fetch(id),
       parseGraph,
-      erroredGraph
+      setError
     )
   ]
 }
@@ -26,11 +26,11 @@ function parseGraph (data) {
   return bind(
     parse(data),
     receiveGraph,
-    erroredGraph
+    setError
   )
 }
 
 module.exports = {
-  selectGraph,
+  selectFocus,
   fetchGraph
 }
