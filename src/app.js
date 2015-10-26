@@ -3,7 +3,10 @@ import el from 'vdom-element'
 import { getReasoner } from './getters'
 import { selectFocus, fetchGraph } from './actions'
 import UrlInput from './components/url-input'
+import NodeList from './components/node-list'
 import QuadsTable from './components/quads-table'
+
+import prefixer from './util/prefixer'
 
 function beforeMount (props) {
   return fetchGraph(props.focusId)
@@ -16,7 +19,7 @@ function beforeUpdate (prevProps, nextProps) {
 }
 
 function render (props) {
-  const { focusId, quads, loading, error } = props
+  const { focusId, loading, error} = props
 
   return (
     <div>
@@ -31,7 +34,10 @@ function render (props) {
       ) : loading ? (
         <div>loading...</div>
       ) : (
-        <QuadsTable { ...props }/>
+        <div>
+          <NodeList { ...props } />
+          <QuadsTable { ...props } />
+        </div>
       )}
     </div>
   )

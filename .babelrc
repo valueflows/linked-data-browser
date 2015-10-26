@@ -1,4 +1,5 @@
 {
   "jsxPragma": "el",
-  "optional": ["es7.objectRestSpread"]
+  "optional": ["es7.objectRestSpread"],
+  "plugins": ["lodash"]
 }
