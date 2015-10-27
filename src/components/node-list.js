@@ -3,22 +3,22 @@ import { Util as N3Util } from 'n3'
 import { map, mapValues } from 'lodash'
 
 export default function render (props) {
-  const { subjects, prefixer } = props
+  const { nodes, prefixer } = props
 
   return <div className="NodeList-container">{
-    renderSubjects({ subjects, prefixer })
+    renderNodes({ nodes, prefixer })
   }</div>
 }
 
-function renderSubjects({ subjects, prefixer }) {
+function renderNodes({ nodes, prefixer }) {
   return <ul className="NodeList-list">{
-    subjects ? map(subjects, (subject, subjectId) => {
-      return renderSubject({ attrs: subject, id: subjectId, prefixer })
+    nodes ? map(nodes, (node, nodeId) => {
+      return renderNode({ attrs: node, id: nodeId, prefixer })
     }) : null
   }</ul>
 }
 
-function renderSubject({ attrs, id, prefixer }) {
+function renderNode({ attrs, id, prefixer }) {
   return <li className="NodeList-item">
     <h3 className="NodeList-id">
       { prefixer(id) }

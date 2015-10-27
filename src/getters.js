@@ -1,5 +1,5 @@
 import { createSelector, createStructuredSelector } from 'reselect'
-import Reasoner, { Graph } from 'reasoner'
+import { Store } from 'n3'
 import lod from 'linkeddata-vocabs'
 import createPrefixer from './util/prefixer'
 
@@ -14,84 +14,49 @@ export const getPrefixer = createSelector(
 
 export const getQuads = state => state.quads
 
-export const getGraph = createSelector(
+export const getStore = createSelector(
   getQuads,
-  (quads) => {
-    let graph = new Graph()
-    quads.forEach(graph.add.bind(graph))
-    return graph
+  getPrefixes,
+  (quads, prefixes) => {
+    return Store(quads, { prefixes })
   }
 )
 
-export const getSubjectIds = createSelector(
-  getGraph,
-  (graph) => {
-    var subjectIds = []
-    for (let quad of graph.find({ predicate: lod.rdf.type })) {
-      subjectIds.push(quad.subject)
-    }
-    return subjectIds
+export const getNodeIds = createSelector(
+  getStore,
+  (store) => {
+    return store.find(null, lod.rdf.type)
+      .map((quad) => quad.subject)
   }
 )
 
-export const getSubjectIdsByType = createSelector(
-  getGraph,
-  (graph) => {
-    var subjectIdsByType = {}
-    for (let quad of graph.find({ predicate: lod.rdf.type })) {
-      if (subjectIdsByType[quad.object] == null) {
-        subjectIdsByType[quad.object] = []
-      }
-      subjectIdsByType[quad.object].push(quad.subject)
-    }
-    return subjectIdsByType
-  }
-)
-
-export const getSubjects = createSelector(
-  getGraph,
-  getSubjectIds,
-  (graph, subjectIds) => {
-    let subjects = {}
-    subjectIds.forEach((subjectId) => {
-      let subject = {}
-      for (let quad of graph.find({ subject: subjectId })) {
-        if (subject[quad.predicate] == null) {
-          subject[quad.predicate] = []
+export const getNodes = createSelector(
+  getStore,
+  getNodeIds,
+  (store, nodeIds) => {
+    console.log(store._graphs)
+    let nodes = {}
+    nodeIds.forEach((nodeId) => {
+      let node = {}
+      store.find(nodeId).forEach((quad) => {
+        if (node[quad.predicate] == null) {
+          node[quad.predicate] = []
         }
-        subject[quad.predicate].push(quad.object)
-      }
-      subjects[subjectId] = subject
+        node[quad.predicate].push(quad.object)
+      })
+      nodes[nodeId] = node
     })
-    return subjects
-  }
-)
-
-export const getReasoner = createSelector(
-  getGraph,
-  (graph) => {
-    return new Reasoner(graph)
+    return nodes
   }
 )
 
 const getFocusId = state => state.focusId
 
-export const getFocus = createSelector(
-  getReasoner,
-  getFocusId,
-  (reasoner, focusId) => {
-    return reasoner.node(focusId)
-  }
-)
-
 export const getProps = createStructuredSelector({
   prefixer: getPrefixer,
   quads: getQuads,
-  graph: getGraph,
-  subjectIds: getSubjectIds,
-  subjectIdsByType: getSubjectIdsByType,
-  subjects: getSubjects,
-  reasoner: getReasoner,
-  focusId: getFocusId,
-  focus: getFocus
+  store: getStore,
+  nodeIds: getNodeIds,
+  nodes: getNodes,
+  focusId: getFocusId
 })

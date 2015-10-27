@@ -35,7 +35,6 @@
     "lodash": "^3.10.1",
     "n3": "^0.4.5",
     "read-blob": "^1.1.0",
-    "reasoner": "github:ahdinosaur/reasoner",
     "redux": "^3.0.3",
     "redux-actions": "^0.8.0",
     "redux-effects": "^0.4.0",
