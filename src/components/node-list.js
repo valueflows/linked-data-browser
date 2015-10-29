@@ -22,15 +22,15 @@ function renderNode(props) {
   const { attrs, id, prefixer } = props
 
   return <li className="NodeList-item">
-    <h3 className="NodeList-id">
+    <h2 className="NodeList-id">
       { prefixer(id) }
-    </h3>
+    </h2>
     <ul className="NodeList-attrs">{
       map(attrs, (objects, predicate) => {
         return <li className="NodeList-predicate-objects">
-          <h4 className="NodeList-predicate">
+          <h3 className="NodeList-predicate">
             { prefixer(predicate) }
-          </h4>
+          </h3>
           <ul className="NodeList-objects">{
             objects.map((object) => {
               return <li className="NodeList-object">
@@ -47,13 +47,22 @@ function renderNode(props) {
 function renderObject (props) {
   const { object, prefixer } = props
 
-  if (N3Util.isIRI(object)) {
-    return <a href="#" ev-click={onClickObject(props)}>
-      { prefixer(object) }
-    </a>
-  } else {
-    return object
+  const isLink = N3Util.isIRI(object)
+
+  const onClick =  isLink ?
+    onClickObject(props) : noop
+
+  const style = {
+    cursor: isLink ? 'pointer' : undefined
   }
+
+  return <h4
+    className="NodeList-object"
+    style={style}
+    ev-click={onClick}
+  >
+    { prefixer(object) }
+  </h4>
 }
 
 function onClickObject ({ object, selectFocus }) {
@@ -62,3 +71,5 @@ function onClickObject ({ object, selectFocus }) {
     return selectFocus(object)
   }
 }
+
+function noop () {}
