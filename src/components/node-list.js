@@ -13,20 +13,20 @@ function renderNodes (props) {
 
   return <ul className="NodeList-list">{
     nodes ? map(nodes, (node, nodeId) => {
-      return renderNode({ ...props, attrs: node, id: nodeId, })
+      return renderNode({ ...props, node, nodeId, })
     }) : null
   }</ul>
 }
 
 function renderNode(props) {
-  const { attrs, id, prefixer } = props
+  const { node, nodeId, prefixer } = props
 
   return <li className="NodeList-item">
-    <h2 className="NodeList-id">
-      { prefixer(id) }
+    <h2 className="NodeList-subject">
+      { prefixer(nodeId) }
     </h2>
-    <ul className="NodeList-attrs">{
-      map(attrs, (objects, predicate) => {
+    <ul className="NodeList-predicates">{
+      map(node, (objects, predicate) => {
         return <li className="NodeList-predicate-objects">
           <h3 className="NodeList-predicate">
             { prefixer(predicate) }
