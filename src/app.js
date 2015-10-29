@@ -35,7 +35,7 @@ function render (props) {
         <div>loading...</div>
       ) : (
         <div>
-          <NodeList { ...props } />
+          <NodeList { ...props } selectFocus={selectFocus} />
           <QuadsTable { ...props } />
         </div>
       )}
