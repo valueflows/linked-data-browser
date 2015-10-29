@@ -13,6 +13,7 @@ export const getPrefixer = createSelector(
 )
 
 export const getQuads = state => state.quads
+export const getGraphs = state => state.graphs
 
 export const getStore = createSelector(
   getQuads,
@@ -54,6 +55,7 @@ const getFocusId = state => state.focusId
 
 export const getProps = createStructuredSelector({
   prefixer: getPrefixer,
+  graphs: getGraphs,
   quads: getQuads,
   store: getStore,
   nodeIds: getNodeIds,

@@ -9,8 +9,9 @@ import { getProps } from './getters'
 
 const store = createStore({
   focusId: 'https://rawgit.com/valueflows/agent/master/examples/enspiral.jsonld',
-  quads: [],
   prefixes: {},
+  graphs: [],
+  quads: [],
   /*
   view: 'quads-table',
   views: views

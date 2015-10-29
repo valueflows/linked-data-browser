@@ -2,9 +2,10 @@ import el from 'vdom-element'
 
 import { getReasoner } from './getters'
 import { selectFocus, fetchGraph } from './actions'
-import UrlInput from './components/url-input'
+import Focus from './components/focus'
 import NodeList from './components/node-list'
 import QuadsTable from './components/quads-table'
+import GraphList from './components/graph-list'
 
 import prefixer from './util/prefixer'
 
@@ -19,26 +20,12 @@ function beforeUpdate (prevProps, nextProps) {
 }
 
 function render (props) {
-  const { focusId, loading, error} = props
-
   return (
     <div>
-      <UrlInput
-        key="focusId"
-        value={focusId}
-        label="@id: "
-        onChange={selectFocus}
-      />
-      { error ? (
-        <div>error!</div>
-      ) : loading ? (
-        <div>loading...</div>
-      ) : (
-        <div>
-          <NodeList { ...props } selectFocus={selectFocus} />
-          <QuadsTable { ...props } />
-        </div>
-      )}
+      <Focus { ...props } onSelect={selectFocus} />
+      <GraphList { ...props } />
+      <NodeList { ...props } onSelect={selectFocus} />
+      <QuadsTable { ...props } />
     </div>
   )
 }

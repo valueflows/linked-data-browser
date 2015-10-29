@@ -65,10 +65,10 @@ function renderObject (props) {
   </h4>
 }
 
-function onClickObject ({ object, selectFocus }) {
+function onClickObject ({ object, onSelect }) {
   return (ev) => {
     ev.preventDefault()
-    return selectFocus(object)
+    return onSelect(object)
   }
 }
 
