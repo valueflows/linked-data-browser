@@ -3,15 +3,15 @@ html, body {
   margin: 0;
 }
 
-.UrlInput-container {
+.Focus-container {
   width: 100%;
 }
 
-.UrlInput-label {
+.Focus-label {
   width: 20%;
 }
 
-.UrlInput-input {
+.Focus-select {
   width: 80%;
 }
 
@@ -21,4 +21,8 @@ input :valid {
 
 input :invalid {
   border: solid red 1px;
+}
+
+.GraphList-id, .GraphList-status {
+  padding: 10px;
 }
