@@ -2,6 +2,8 @@ import isofetch from 'isomorphic-fetch'
 import readBlob from 'read-blob'
 import { createAction } from 'redux-actions'
 
+import createUrlify from '../util/urlify'
+
 const FETCH = 'EFFECT_FETCH'
 
 function fetchMiddleware ({ dispatch, getState }) {
@@ -14,8 +16,8 @@ function fetchMiddleware ({ dispatch, getState }) {
         .then(blobify)
         .then(textify)
         .then(urlify)
-        .catch((err) => {
-          throw urlify({ err })
+        .catch((error) => {
+          throw urlify({ error })
         })
       : next(action)
     }
@@ -41,12 +43,6 @@ function textify (blob) {
         content: text
       }
     })
-}
-
-function createUrlify (url) {
-  return (obj) => {
-    return { ...obj, url }
-  }
 }
 
 const fetch = createAction(

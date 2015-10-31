@@ -2,13 +2,22 @@ import { createAction } from 'redux-actions'
 import { Util as N3Util, Parser as N3Parser, Store as N3Store } from 'n3'
 import { promises as JsonLd } from 'jsonld'
 
+import createUrlify from '../util/urlify'
+
 const PARSE = 'EFFECT_PARSE'
 
 function parseMiddleware ({ dispatch, getState }) {
-  return next => action =>
-    action.type === PARSE
+  return next => action => {
+    const urlify = createUrlify(action.payload.url)
+
+    return action.type === PARSE
       ? parserByFormat(action.payload.type)(action.payload.content)
+        .then(urlify)
+        .catch((error ) => {
+          return urlify({ error })
+        })
       : next(action)
+  }
 }
 
 function parserByFormat (format) {
@@ -27,6 +36,7 @@ function parserByFormat (format) {
         .then(parserByFormat('application/n-quads'))
         .then((graph) => {
           return {
+            content: content,
             quads: graph.quads,
             prefixes: context
           }
@@ -46,7 +56,7 @@ function parserByFormat (format) {
             if (quad) {
               quads.push(quad)
             } else {
-              resolve({ quads, prefixes })
+              resolve({ content, quads, prefixes })
             }
           })
         })
@@ -54,7 +64,7 @@ function parserByFormat (format) {
 
     default:
       return content => {
-        return { quads: [], prefixes: {} }
+        return { content, quads: [], prefixes: {} }
       }
   }
 }

@@ -45,8 +45,10 @@ function parseGraph (graph) {
     receiveGraph(graph),
     bind(
       parse(graph),
-      ({ prefixes, quads }) => {
+      (graph) => {
+        const { prefixes, quads } = graph
         return [
+          receiveGraph(graph),
           receivePrefixes(prefixes),
           receiveQuads(quads)
         ]
