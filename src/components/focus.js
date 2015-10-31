@@ -1,7 +1,7 @@
 import el from 'vdom-element'
 
 function render (props) {
-  const { focusId, label, onChange } = props
+  const { focusId, label, onSelect } = props
 
   return (
     <div class="Focus-container">
