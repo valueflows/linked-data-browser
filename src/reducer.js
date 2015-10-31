@@ -1,7 +1,7 @@
 import { handleActions } from 'redux-actions'
 
 const {
-  SELECT_FOCUS,
+  RECEIVE_ROUTE,
   REQUEST_GRAPH,
   RECEIVE_GRAPH,
   ERRORED_GRAPH,
@@ -11,13 +11,13 @@ const {
 } = require('./action-types')
 
 const reducer = handleActions({
-  SELECT_FOCUS: (state, action) => {
+  [RECEIVE_ROUTE]: (state, action) => {
     return {
       ...state,
-      focusId: action.payload
+      route: Object.assign({}, state.route, action.payload),
     }
   },
-  REQUEST_GRAPH: (state, action) => {
+  [REQUEST_GRAPH]: (state, action) => {
     return {
       ...state,
       graphs: {
@@ -29,7 +29,7 @@ const reducer = handleActions({
       }
     }
   },
-  RECEIVE_GRAPH: (state, action) => {
+  [RECEIVE_GRAPH]: (state, action) => {
     return {
       ...state,
       graphs: {
@@ -41,7 +41,7 @@ const reducer = handleActions({
       }
     }
   },
-  ERRORED_GRAPH: (state, action) => {
+  [ERRORED_GRAPH]: (state, action) => {
     return {
       ...state,
       graphs: {
@@ -53,19 +53,19 @@ const reducer = handleActions({
       }
     }
   },
-  RECEIVE_QUADS: (state, action) => {
+  [RECEIVE_QUADS]: (state, action) => {
     return {
       ...state,
       quads: state.quads.concat(action.payload)
     }
   },
-  RECEIVE_PREFIXES: (state, action) => {
+  [RECEIVE_PREFIXES]: (state, action) => {
     return {
       ...state,
       prefixes: Object.assign({}, state.prefixes, action.payload),
     }
   },
-  SET_ERROR: (state, action) => {
+  [SET_ERROR]: (state, action) => {
     console.error(action.payload)
     return {
       ...state,

@@ -51,7 +51,7 @@ export const getNodes = createSelector(
   }
 )
 
-const getFocusId = state => state.focusId
+const getRoute = state => state.route
 
 export const getProps = createStructuredSelector({
   prefixer: getPrefixer,
@@ -60,5 +60,5 @@ export const getProps = createStructuredSelector({
   store: getStore,
   nodeIds: getNodeIds,
   nodes: getNodes,
-  focusId: getFocusId
+  route: getRoute
 })

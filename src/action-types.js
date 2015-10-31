@@ -1,7 +1,7 @@
 import createActionTypes from 'create-action-types'
 
 const actionTypes = createActionTypes([
-  'SELECT_FOCUS',
+  'RECEIVE_ROUTE',
   'REQUEST_GRAPH',
   'RECEIVE_GRAPH',
   'ERRORED_GRAPH',

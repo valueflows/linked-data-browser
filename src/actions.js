@@ -1,11 +1,25 @@
 import { createAction } from 'redux-actions'
+import QueryString from 'querystring'
 import { bind } from 'redux-effects'
+import { setUrl } from 'redux-effects-location'
+
 import { fetch } from './effects/fetch'
 import { parse } from './effects/parse'
-
 import actionTypes from './action-types'
 
-const selectFocus = createAction(actionTypes.SELECT_FOCUS)
+const receiveRoute = createAction(actionTypes.RECEIVE_ROUTE)
+
+function selectRoute (route) {
+  const queryString = QueryString.stringify(route)
+  return [
+    setUrl(`./?${queryString}`),
+    receiveRoute(route)
+  ]
+}
+
+function selectFocus (focusId) {
+  return selectRoute({ focusId })
+}
 
 const requestGraph = createAction(actionTypes.REQUEST_GRAPH)
 const receiveGraph = createAction(actionTypes.RECEIVE_GRAPH)
@@ -59,6 +73,8 @@ function parseGraph (graph) {
 }
 
 module.exports = {
+  selectRoute,
+  receiveRoute,
   selectFocus,
   loadGraph
 }

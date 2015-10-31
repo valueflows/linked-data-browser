@@ -40,6 +40,7 @@
     "redux-effects": "^0.4.0",
     "redux-effects-events": "^0.2.5",
     "redux-effects-fetch": "github:ahdinosaur/redux-effects-fetch",
+    "redux-effects-location": "^0.1.11",
     "redux-logger": "^2.0.4",
     "redux-multi": "^0.1.9",
     "redux-thunk": "^1.0.0",
