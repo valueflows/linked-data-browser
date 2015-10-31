@@ -8,35 +8,35 @@ export default function render (props) {
       props.error ? 'error!' : ''
     }</div>
     <ul className="GraphList-list">{
-      props.graphs.map((graph) => {
-        const statusName = getGraphStatus(graph)
-        const statusStyle = getStatusName(graph)
+      map(props.graphs, (graph, id) => {
+        const statusName = getStatusName(graph)
+        const statusStyle = getStatusStyle(statusName)
 
         return <li className="GraphList-item">
-          <div className="GraphList-id">
-            { graph.id }
-          </div>
-          <div className="GraphList-status"
+          <span className="GraphList-id">
+            { id }
+          </span>
+          <span className="GraphList-status"
             style={statusStyle}
-          >{ styleName }</div>
+          >{ statusName }</span>
         </li>
       })
     }</ul>
   </div>
 }
 
-function getStatusName ({ error, result }) {
+function getStatusName ({ error, content }) {
   if (error) {
     return 'errored'
-  } else if (result === undefined) {
+  } else if (content === undefined) {
     return 'loading'
   } else {
     return 'success'
   }
 }
 
-function getStatusColor ({ status }) {
-  switch (status) {
+function getStatusStyle (statusName) {
+  switch (statusName) {
     case 'errored': 
       return { 
         color: 'red'

@@ -9,6 +9,9 @@ const selectFocus = createAction(actionTypes.SELECT_FOCUS)
 
 const requestGraph = createAction(actionTypes.REQUEST_GRAPH)
 const receiveGraph = createAction(actionTypes.RECEIVE_GRAPH)
+const erroredGraph = createAction(actionTypes.ERRORED_GRAPH)
+const receivePrefixes = createAction(actionTypes.RECEIVE_PREFIXES)
+const receiveQuads = createAction(actionTypes.RECEIVE_QUADS)
 const setError = createAction(actionTypes.SET_ERROR)
 
 function fetchGraph (id) {
@@ -17,20 +20,43 @@ function fetchGraph (id) {
     bind(
       fetch(id),
       parseGraph,
+      erroredGraph
+    )
+  ]
+}
+
+function shouldFetchGraph (state, graphId) {
+  const graph = state.graphs[graphId]
+  if (!graph) return true
+  if (graph.content == null) return false
+  return !!graph.dirty
+}
+
+function loadGraph (id) {
+  return (dispatch, getState) => {
+    if (shouldFetchGraph(getState()), id) {
+      return dispatch(fetchGraph(id))
+    }
+  }
+}
+
+function parseGraph (graph) {
+  return [
+    receiveGraph(graph),
+    bind(
+      parse(graph),
+      ({ prefixes, quads }) => {
+        return [
+          receivePrefixes(prefixes),
+          receiveQuads(quads)
+        ]
+      },
       setError
     )
   ]
 }
 
-function parseGraph (data) {
-  return bind(
-    parse(data),
-    receiveGraph,
-    setError
-  )
-}
-
 module.exports = {
   selectFocus,
-  fetchGraph
+  loadGraph
 }

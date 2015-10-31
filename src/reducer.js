@@ -4,6 +4,9 @@ const {
   SELECT_FOCUS,
   REQUEST_GRAPH,
   RECEIVE_GRAPH,
+  ERRORED_GRAPH,
+  RECEIVE_PREFIXES,
+  RECEIVE_QUADS,
   SET_ERROR
 } = require('./action-types')
 
@@ -17,16 +20,49 @@ const reducer = handleActions({
   REQUEST_GRAPH: (state, action) => {
     return {
       ...state,
-      loading: true,
-      error: null
+      graphs: {
+        ...state.graphs,
+        [action.payload]: {
+          error: undefined,
+          content: undefined
+        }
+      }
     }
   },
   RECEIVE_GRAPH: (state, action) => {
     return {
       ...state,
-      quads: state.quads.concat(action.payload.quads),
-      prefixes: Object.assign({}, state.prefixes, action.payload.prefixes),
-      loading: false
+      graphs: {
+        ...state.graphs,
+        [action.payload.url]: {
+          error: null,
+          content: action.payload.content
+        }
+      }
+    }
+  },
+  ERRORED_GRAPH: (state, action) => {
+    return {
+      ...state,
+      graphs: {
+        ...state.graphs,
+        [action.payload.url]: {
+          error: action.payload.error,
+          content: null
+        }
+      }
+    }
+  },
+  RECEIVE_QUADS: (state, action) => {
+    return {
+      ...state,
+      quads: state.quads.concat(action.payload)
+    }
+  },
+  RECEIVE_PREFIXES: (state, action) => {
+    return {
+      ...state,
+      prefixes: Object.assign({}, state.prefixes, action.payload),
     }
   },
   SET_ERROR: (state, action) => {

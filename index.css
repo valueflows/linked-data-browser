@@ -22,3 +22,7 @@ input :valid {
 input :invalid {
   border: solid red 1px;
 }
+
+.GraphList-id, .GraphList-status {
+  padding: 10px;
+}

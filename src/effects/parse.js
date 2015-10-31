@@ -7,7 +7,7 @@ const PARSE = 'EFFECT_PARSE'
 function parseMiddleware ({ dispatch, getState }) {
   return next => action =>
     action.type === PARSE
-      ? parserByFormat(action.payload.type)(action.payload.text)
+      ? parserByFormat(action.payload.type)(action.payload.content)
       : next(action)
 }
 
@@ -16,8 +16,8 @@ function parserByFormat (format) {
     case 'application/octet':
     case 'application/json':
     case 'application/ld+json':
-      return (text) => {
-        let json = JSON.parse(text)
+      return (content) => {
+        let json = JSON.parse(content)
         var context
         return processContext(json['@context'])
         .then((ctx) => {
@@ -38,10 +38,10 @@ function parserByFormat (format) {
     case 'application/n-triples':
     case 'application/n-quads':
       var parser = N3Parser({ format })
-      return (text) => {
+      return (content) => {
         return new Promise((resolve, reject) => {
           var quads = []
-          parser.parse(text, (err, quad, prefixes) => {
+          parser.parse(content, (err, quad, prefixes) => {
             if (err) { return reject(err) }
             if (quad) {
               quads.push(quad)
@@ -53,7 +53,7 @@ function parserByFormat (format) {
       }
 
     default:
-      return text => {
+      return content => {
         return { quads: [], prefixes: {} }
       }
   }

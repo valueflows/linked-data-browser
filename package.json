@@ -42,6 +42,7 @@
     "redux-effects-fetch": "github:ahdinosaur/redux-effects-fetch",
     "redux-logger": "^2.0.4",
     "redux-multi": "^0.1.9",
+    "redux-thunk": "^1.0.0",
     "reselect": "^2.0.0",
     "vdom-element": "^0.2.3",
     "vdux": "^0.1.8",
