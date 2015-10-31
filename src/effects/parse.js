@@ -13,8 +13,8 @@ function parseMiddleware ({ dispatch, getState }) {
     return action.type === PARSE
       ? parserByFormat(action.payload.type)(action.payload.content)
         .then(urlify)
-        .catch((error ) => {
-          return urlify({ error })
+        .catch((error) => {
+          throw urlify({ error })
         })
       : next(action)
   }
@@ -64,7 +64,11 @@ function parserByFormat (format) {
 
     default:
       return content => {
-        return { content, quads: [], prefixes: {} }
+        return new Promise((resolve, reject) => {
+          reject(new Error(`
+            effects/parse: unable to parse Content-Type ${format}.
+          `))
+        })
       }
   }
 }

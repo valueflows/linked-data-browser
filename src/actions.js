@@ -28,7 +28,7 @@ function fetchGraph (id) {
 function shouldFetchGraph (state, graphId) {
   const graph = state.graphs[graphId]
   if (!graph) return true
-  if (graph.content == null) return false
+  if (graph.content === undefined) return false
   return !!graph.dirty
 }
 
@@ -53,7 +53,7 @@ function parseGraph (graph) {
           receiveQuads(quads)
         ]
       },
-      setError
+      erroredGraph
     )
   ]
 }
