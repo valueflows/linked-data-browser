@@ -1,11 +1,12 @@
 import { createAction } from 'redux-actions'
 import QueryString from 'querystring'
 import { bind } from 'redux-effects'
-import { setUrl } from 'redux-effects-location'
+import { getUrl, setUrl, bindUrl } from 'redux-effects-location'
 
 import { fetch } from './effects/fetch'
 import { parse } from './effects/parse'
 import actionTypes from './action-types'
+import parseRoute from './util/parse-route'
 
 const receiveRoute = createAction(actionTypes.RECEIVE_ROUTE)
 
@@ -14,6 +15,25 @@ function selectRoute (route) {
   return [
     setUrl(`./?${queryString}`),
     receiveRoute(route)
+  ]
+}
+
+function setupRouter () {
+  return [
+    bind(
+      getUrl(),
+      (url) => {
+        console.log("url", url)
+        const route = Object.assign({
+          focusId: 'https://rawgit.com/valueflows/agent/master/examples/enspiral.jsonld'
+        }, parseRoute(url))
+        return receiveRoute(route)
+      },
+      setError
+    ),
+    bindUrl((url) => {
+      return receiveRoute(parseRoute(url))
+    })
   ]
 }
 
@@ -73,8 +93,8 @@ function parseGraph (graph) {
 }
 
 module.exports = {
+  setupRouter,
   selectRoute,
-  receiveRoute,
   selectFocus,
   loadGraph
 }
