@@ -53,10 +53,24 @@ function fetchGraph (id) {
     requestGraph(id),
     bind(
       fetch(id),
-      parseGraph,
+      (graph) => {
+        let action = []
+        if (graph.url !== id) {
+          // graph was a redirect
+          action.push(redirectGraph(id, graph.url))
+        }
+        action.push(parseGraph(graph))
+        return action
+      },
       erroredGraph
     )
   ]
+}
+
+function redirectGraph (oldUrl, newUrl) {
+  return receiveGraph({
+    url: oldUrl, redirect: newUrl
+  })
 }
 
 function shouldFetchGraph (state, graphId) {

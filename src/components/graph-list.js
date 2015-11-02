@@ -25,9 +25,11 @@ export default function render (props) {
   </div>
 }
 
-function getStatusName ({ error, content }) {
+function getStatusName ({ error, content, redirect }) {
   if (error) {
     return 'errored'
+  } else if (redirect) {
+    return 'redirect'
   } else if (content === undefined) {
     return 'loading'
   } else {
@@ -44,6 +46,10 @@ function getStatusStyle (statusName) {
     case 'loading':
       return { 
         color: 'blue'
+      }
+    case 'redirect':
+      return {
+        color: 'black'
       }
     case 'success':
       return { 

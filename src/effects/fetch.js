@@ -15,7 +15,6 @@ function fetchMiddleware ({ dispatch, getState }) {
         .then(checkStatus)
         .then(blobify)
         .then(textify)
-        .then(urlify)
         .catch((error) => {
           throw urlify({ error })
         })
@@ -33,14 +32,21 @@ function checkStatus (res) {
 
 function blobify (res) {
   return res.blob()
+    .then((blob) => { 
+      return {
+        blob,
+        url: res.url
+      }
+    })
 }
 
-function textify (blob) {
+function textify ({ blob, url }) {
   return readBlob(blob, 'text')
     .then(text => {
       return {
         type: blob.type,
-        content: text
+        content: text,
+        url
       }
     })
 }

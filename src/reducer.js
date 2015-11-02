@@ -36,7 +36,7 @@ const reducer = handleActions({
         ...state.graphs,
         [action.payload.url]: {
           error: null,
-          content: action.payload.content
+          ...action.payload
         }
       }
     }
