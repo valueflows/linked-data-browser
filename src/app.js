@@ -10,24 +10,28 @@ import GraphList from './components/graph-list'
 import prefixer from './util/prefixer'
 
 function beforeMount (props) {
-  return loadGraph(props.route.focusId)
+  return loadGraph(props.focusId)
 }
 
 function beforeUpdate (prevProps, nextProps) {
-  if (prevProps.route.focusId !== nextProps.route.focusId) {
-    return loadGraph(nextProps.route.focusId)
+  if (prevProps.focusId !== nextProps.focusId) {
+    return loadGraph(nextProps.focusId)
   }
 }
 
 function render (props) {
-  const { route } = props
-  const { focusId } = route
+  const { focusId, focus } = props
 
   return (
     <div>
       <Focus { ...props } focusId={focusId} onSelect={selectFocus} />
       <GraphList { ...props } />
-      <NodeList { ...props } onSelect={selectFocus} />
+      {
+        focus ?
+          <NodeList { ...props } nodes={ { [focusId]: focus } } onSelect={selectFocus} />
+          :
+          <NodeList { ...props } onSelect={selectFocus} />
+      }
       <QuadsTable { ...props } />
     </div>
   )

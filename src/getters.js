@@ -3,19 +3,19 @@ import { Store } from 'n3'
 import lod from 'linkeddata-vocabs'
 import createPrefixer from './util/prefixer'
 
-export const getPrefixes = state => state.prefixes
+const getPrefixes = state => state.prefixes
 
-export const getPrefixer = createSelector(
+const getPrefixer = createSelector(
   getPrefixes,
   (prefixes) => {
     return createPrefixer(prefixes)
   }
 )
 
-export const getQuads = state => state.quads
-export const getGraphs = state => state.graphs
+const getQuads = state => state.quads
+const getGraphs = state => state.graphs
 
-export const getStore = createSelector(
+const getStore = createSelector(
   getQuads,
   getPrefixes,
   (quads, prefixes) => {
@@ -23,7 +23,7 @@ export const getStore = createSelector(
   }
 )
 
-export const getNodeIds = createSelector(
+const getNodeIds = createSelector(
   getStore,
   (store) => {
     return store.find(null, lod.rdf.type, null, null)
@@ -31,11 +31,10 @@ export const getNodeIds = createSelector(
   }
 )
 
-export const getNodes = createSelector(
+const getNodes = createSelector(
   getStore,
   getNodeIds,
   (store, nodeIds) => {
-    console.log(store._graphs)
     let nodes = {}
     nodeIds.forEach((nodeId) => {
       let node = {}
@@ -53,6 +52,21 @@ export const getNodes = createSelector(
 
 const getRoute = state => state.route
 
+const getFocusId = createSelector(
+  getRoute,
+  (route) => route.focusId
+)
+
+const getFocus  = createSelector(
+  getFocusId,
+  getNodes,
+  (focusId, nodes) => {
+    if (nodes[focusId]) {
+      return nodes[focusId]
+    }
+  }
+)
+
 export const getProps = createStructuredSelector({
   prefixer: getPrefixer,
   graphs: getGraphs,
@@ -60,5 +74,7 @@ export const getProps = createStructuredSelector({
   store: getStore,
   nodeIds: getNodeIds,
   nodes: getNodes,
+  focusId: getFocusId,
+  focus: getFocus,
   route: getRoute
 })
