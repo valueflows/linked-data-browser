@@ -26,7 +26,7 @@ export const getStore = createSelector(
 export const getNodeIds = createSelector(
   getStore,
   (store) => {
-    return store.find(null, lod.rdf.type)
+    return store.find(null, lod.rdf.type, null, null)
       .map((quad) => quad.subject)
   }
 )
@@ -39,7 +39,7 @@ export const getNodes = createSelector(
     let nodes = {}
     nodeIds.forEach((nodeId) => {
       let node = {}
-      store.find(nodeId).forEach((quad) => {
+      store.find(nodeId, null, null, null).forEach((quad) => {
         if (node[quad.predicate] == null) {
           node[quad.predicate] = []
         }

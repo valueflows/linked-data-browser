@@ -11,7 +11,7 @@ function parseMiddleware ({ dispatch, getState }) {
     const urlify = createUrlify(action.payload.url)
 
     return action.type === PARSE
-      ? parserByFormat(action.payload.type)(action.payload.content)
+      ? parserByFormat(action.payload.type)(action.payload)
         .then(urlify)
         .catch((error) => {
           throw urlify({ error })
@@ -25,7 +25,7 @@ function parserByFormat (format) {
     case 'application/octet':
     case 'application/json':
     case 'application/ld+json':
-      return (content) => {
+      return ({ content, url }) => {
         let json = JSON.parse(content)
         var context
         return processContext(json['@context'])
@@ -33,7 +33,10 @@ function parserByFormat (format) {
           json['@context'] = context = ctx
           return JsonLd.toRDF(json, { format: 'application/nquads' })
         })
-        .then(parserByFormat('application/n-quads'))
+        .then((nquads) => {
+          return { content: nquads, url }
+        })
+        .then(parserByFormat('application/nquads'))
         .then((graph) => {
           return {
             content: content,
@@ -46,9 +49,11 @@ function parserByFormat (format) {
     case 'application/trig':
     case 'text/turtle':
     case 'application/n-triples':
+    case 'application/ntriples':
     case 'application/n-quads':
+    case 'application/nquads':
       var parser = N3Parser({ format })
-      return (content) => {
+      return ({ content, url }) => {
         return new Promise((resolve, reject) => {
           var quads = []
           parser.parse(content, (err, quad, prefixes) => {
@@ -56,6 +61,9 @@ function parserByFormat (format) {
             if (quad) {
               quads.push(quad)
             } else {
+              // add url as graph to quads if not already assigned
+              quads = quads.map(defaultQuadGraph(url))
+              // return
               resolve({ content, quads, prefixes })
             }
           })
@@ -63,7 +71,7 @@ function parserByFormat (format) {
       }
 
     default:
-      return content => {
+      return ({ content }) => {
         return new Promise((resolve, reject) => {
           reject(new Error(`
             effects/parse: unable to parse Content-Type ${format}.
@@ -110,3 +118,13 @@ const parse = createAction(PARSE)
  
 export default parseMiddleware
 export { parse }
+
+// TODO util-ify
+function defaultQuadGraph (graph) {
+  return (quad) => {
+    if (!quad.graph) {
+      return Object.assign({}, quad, { graph })
+    }
+    return quad
+  }
+}
