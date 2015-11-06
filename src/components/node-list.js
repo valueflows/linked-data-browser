@@ -23,18 +23,18 @@ function renderNode(props) {
 
   return <li className="NodeList-item">
     <h2 className="NodeList-subject">
-      { prefixer(nodeId) }
+      { renderLink({ ...props, link: nodeId }) }
     </h2>
     <ul className="NodeList-predicates">{
       map(node, (objects, predicate) => {
         return <li className="NodeList-predicate-objects">
           <h3 className="NodeList-predicate">
-            { prefixer(predicate) }
+            { renderLink({ ...props, link: predicate }) }
           </h3>
           <ul className="NodeList-objects">{
             objects.map((object) => {
               return <li className="NodeList-object">
-                { renderObject({ ...props, object }) }
+                { renderLink({ ...props, link: object }) }
               </li>
             })
           }</ul>
@@ -44,31 +44,31 @@ function renderNode(props) {
   </li>
 }
 
-function renderObject (props) {
-  const { object, prefixer } = props
+function renderLink (props) {
+  const { link, prefixer } = props
 
-  const isLink = N3Util.isIRI(object)
+  const isLink = N3Util.isIRI(link)
 
   const onClick =  isLink ?
-    onClickObject(props) : noop
+    onClickLink(props) : noop
 
   const style = {
     cursor: isLink ? 'pointer' : undefined
   }
 
-  return <h4
-    className="NodeList-object"
+  return <a
+    className="NodeList-link"
     style={style}
     ev-click={onClick}
   >
-    { prefixer(object) }
-  </h4>
+    { prefixer(link) }
+  </a>
 }
 
-function onClickObject ({ object, onSelect }) {
+function onClickLink ({ link, onSelect }) {
   return (ev) => {
     ev.preventDefault()
-    return onSelect(object)
+    return onSelect(link)
   }
 }
 
