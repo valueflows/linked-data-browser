@@ -1,4 +1,5 @@
 import { createAction } from 'redux-actions'
+import Url from 'url'
 import QueryString from 'querystring'
 import { bind } from 'redux-effects'
 import { getUrl, setUrl, bindUrl } from 'redux-effects-location'
@@ -81,8 +82,9 @@ function shouldFetchGraph (state, graphId) {
 }
 
 function loadGraph (id) {
+  if (id) id = unhashUrl(id)
   return (dispatch, getState) => {
-    if (shouldFetchGraph(getState()), id) {
+    if (shouldFetchGraph(getState(), id)) {
       return dispatch(fetchGraph(id))
     }
   }
@@ -111,4 +113,13 @@ module.exports = {
   selectRoute,
   selectFocus,
   loadGraph
+}
+
+// TODO util-ify
+function unhashUrl (url) {
+  return Url.format(
+    Object.assign(
+      Url.parse(url), { hash: null }
+    )
+  )
 }
