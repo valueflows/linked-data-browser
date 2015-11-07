@@ -1,16 +1,19 @@
 import el from 'vdom-element'
+const sheetify = require('sheetify')
+
+const prefix = sheetify('./focus-selector.css')
 
 function render (props) {
   const { focusId, label, onSelect } = props
 
   return (
-    <div class="Focus-container">
+    <div className={prefix}>
       <label
-        class="Focus-label"
+        className="label"
         htmlFor={focusId}
       >{ "focus @id" }</label>
       <input
-        class="Focus-select"
+        className="select"
         type="url"
         value={focusId}
         key={focusId}

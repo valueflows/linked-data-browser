@@ -13,7 +13,8 @@
   },
   "browserify": {
     "transform": [
-      "babelify"
+      "babelify",
+      "sheetify/transform"
     ]
   },
   "repository": {
@@ -45,6 +46,7 @@
     "redux-multi": "^0.1.9",
     "redux-thunk": "^1.0.0",
     "reselect": "^2.0.0",
+    "sheetify": "github:sheetify/sheetify#4ebd30bd0ba5a59fa293d8aa9b67208324cf28f7",
     "vdom-element": "^0.2.3",
     "vdux": "^0.1.8",
     "virtual-component": "^0.2.5"

@@ -1,0 +1,20 @@
+{
+  width: 100%;
+}
+
+.label {
+  width: 20%;
+}
+
+.select {
+  width: 80%;
+}
+
+input:valid {
+  border: solid green 1px;
+}
+
+input:invalid {
+  border: solid red 1px;
+}
+

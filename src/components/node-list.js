@@ -1,9 +1,12 @@
 import el from 'vdom-element'
+const sheetify = require('sheetify')
 import { Util as N3Util } from 'n3'
 import { map, mapValues } from 'lodash'
 
+const prefix = sheetify('./node-list.css')
+
 export default function render (props) {
-  return <div className="NodeList-container">{
+  return <div className={prefix}>{
     renderNodes(props)
   }</div>
 }
@@ -11,7 +14,7 @@ export default function render (props) {
 function renderNodes (props) {
   const { nodes } = props
 
-  return <ul className="NodeList-list">{
+  return <ul className="list">{
     nodes ? map(nodes, (node, nodeId) => {
       return renderNode({ ...props, node, nodeId, })
     }) : null
@@ -21,19 +24,19 @@ function renderNodes (props) {
 function renderNode(props) {
   const { node, nodeId, prefixer } = props
 
-  return <li className="NodeList-item">
-    <h2 className="NodeList-subject">
+  return <li className="item">
+    <h2 className="subject">
       { renderLink({ ...props, link: nodeId }) }
     </h2>
-    <ul className="NodeList-predicates">{
+    <ul className="predicates">{
       map(node, (objects, predicate) => {
-        return <li className="NodeList-predicate-objects">
-          <h3 className="NodeList-predicate">
+        return <li className="predicate-objects">
+          <h3 className="predicate">
             { renderLink({ ...props, link: predicate }) }
           </h3>
-          <ul className="NodeList-objects">{
+          <ul className="objects">{
             objects.map((object) => {
-              return <li className="NodeList-object">
+              return <li className="object">
                 { renderLink({ ...props, link: object }) }
               </li>
             })
@@ -57,7 +60,7 @@ function renderLink (props) {
   }
 
   return <a
-    className="NodeList-link"
+    className="link"
     style={style}
     ev-click={onClick}
   >

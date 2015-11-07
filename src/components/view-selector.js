@@ -1,17 +1,20 @@
 import el from 'vdom-element'
+const sheetify = require('sheetify')
 import { map } from 'lodash'
+
+const prefix = sheetify('./view-selector.css')
 
 function render (props) {
   const { views, viewId, onSelect } = props
 
   return (
-    <div className="View-container">
+    <div className={ prefix }>
       <label
-        className="View-label"
+        className="label"
         htmlFor="view"
       >{ "view as:" }</label>
       <select
-        className="View-select"
+        className="select"
         id="view"
         name="view"
         ev-change={ e => onSelect(e.target.value) }

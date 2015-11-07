@@ -1,22 +1,25 @@
 import el from 'vdom-element'
+const sheetify = require('sheetify')
 import { Util as N3Util } from 'n3'
 import { map, mapValues } from 'lodash'
 
+const prefix = sheetify('./graph-list.css')
+
 export default function render (props) {
-  return <div className="GraphList-container">
-    <div className="GraphList-error">{
+  return <div className={ prefix }>
+    <div className="error">{
       props.error ? 'error!' : ''
     }</div>
-    <ul className="GraphList-list">{
+    <ul className="list">{
       map(props.graphs, (graph, id) => {
         const statusName = getStatusName(graph)
         const statusStyle = getStatusStyle(statusName)
 
-        return <li className="GraphList-item">
-          <span className="GraphList-id">
+        return <li className="item">
+          <span className="id">
             { id }
           </span>
-          <span className="GraphList-status"
+          <span className="status"
             style={statusStyle}
           >{ statusName }</span>
         </li>
