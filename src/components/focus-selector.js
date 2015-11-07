@@ -1,7 +1,9 @@
-import el from 'vdom-element'
+const el = require('vdom-element')
 const sheetify = require('sheetify')
 
 const prefix = sheetify('./focus-selector.css')
+
+module.exports = render
 
 function render (props) {
   const { focusId, label, onSelect } = props
@@ -22,5 +24,3 @@ function render (props) {
     </div>
   )
 }
-
-module.exports = { render }

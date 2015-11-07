@@ -1,8 +1,8 @@
-import isofetch from 'isomorphic-fetch'
-import readBlob from 'read-blob'
-import { createAction } from 'redux-actions'
+const isofetch = require('isomorphic-fetch')
+const readBlob = require('read-blob')
+const { createAction } = require('redux-actions')
 
-import createUrlify from '../util/urlify'
+const createUrlify = require('../util/urlify')
 
 const FETCH = 'EFFECT_FETCH'
 
@@ -60,5 +60,5 @@ const fetch = createAction(
   }
 )
 
-export default fetchMiddleware
-export { fetch }
+module.exports = fetchMiddleware
+module.exports.fetch = fetch

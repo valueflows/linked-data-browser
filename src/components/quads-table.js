@@ -1,10 +1,11 @@
-import el from 'vdom-element'
+const el = require('vdom-element')
 const sheetify = require('sheetify')
-import { Util as N3Util } from 'n3'
 
 const prefix = sheetify('./quads-table.css')
 
-export default function render (props) {
+module.exports = render
+
+function render (props) {
   const { quads, prefixer } = props
 
   return (

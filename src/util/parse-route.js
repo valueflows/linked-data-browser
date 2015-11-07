@@ -1,6 +1,8 @@
-import QueryString from 'querystring'
+const QueryString = require('querystring')
 
-export default function parseRoute (url) {
+module.exports = parseRoute
+
+function parseRoute (url) {
   const queryString = url.split('?', 2)[1]
   return QueryString.parse(queryString)
 }

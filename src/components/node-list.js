@@ -1,11 +1,14 @@
-import el from 'vdom-element'
+const el = require('vdom-element')
 const sheetify = require('sheetify')
-import { Util as N3Util } from 'n3'
-import { map, mapValues } from 'lodash'
+const N3 = require('n3')
+const map = require('lodash.map')
+const mapValues = require('lodash.mapvalues')
 
 const prefix = sheetify('./node-list.css')
 
-export default function render (props) {
+module.exports = render
+
+function render (props) {
   return <div className={prefix}>{
     renderNodes(props)
   }</div>
@@ -50,7 +53,7 @@ function renderNode(props) {
 function renderLink (props) {
   const { link, prefixer } = props
 
-  const isLink = N3Util.isIRI(link)
+  const isLink = N3.Util.isIRI(link)
 
   const onClick =  isLink ?
     onClickLink(props) : noop

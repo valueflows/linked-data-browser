@@ -1,6 +1,6 @@
 import el from 'vdom-element'
 const sheetify = require('sheetify')
-import { map } from 'lodash'
+import map from 'lodash.map'
 
 const prefix = sheetify('./view-selector.css')
 

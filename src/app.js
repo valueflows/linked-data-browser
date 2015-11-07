@@ -1,14 +1,20 @@
-import el from 'vdom-element'
+const el = require('vdom-element')
 
-import { getReasoner } from './getters'
-import { selectFocus, selectView, loadGraph } from './actions'
-import FocusSelector from './components/focus-selector'
-import ViewSelector from './components/view-selector'
-import NodeList from './components/node-list'
-import QuadsTable from './components/quads-table'
-import GraphList from './components/graph-list'
+const { getReasoner } = require('./getters')
+const { selectFocus, selectView, loadGraph } = require('./actions')
+const FocusSelector = require('./components/focus-selector')
+const ViewSelector = require('./components/view-selector')
+const NodeList = require('./components/node-list')
+const QuadsTable = require('./components/quads-table')
+const GraphList = require('./components/graph-list')
 
-import prefixer from './util/prefixer'
+const prefixer = require('./util/prefixer')
+
+module.exports = {
+  beforeMount,
+  beforeUpdate,
+  render
+}
 
 function beforeMount (props) {
   if (props.focusId)
@@ -37,10 +43,4 @@ function render (props) {
       { View ? <View { ...props } onSelect={selectFocus} /> : null }
     </div>
   )
-}
-
-module.exports = {
-  beforeMount,
-  beforeUpdate,
-  render
 }

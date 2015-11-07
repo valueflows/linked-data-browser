@@ -1,11 +1,13 @@
-import el from 'vdom-element'
+const el = require('vdom-element')
 const sheetify = require('sheetify')
-import { Util as N3Util } from 'n3'
-import { map, mapValues } from 'lodash'
+const map = require('lodash.map')
+const mapValues = require('lodash.mapvalues')
 
 const prefix = sheetify('./graph-list.css')
 
-export default function render (props) {
+module.exports = render
+
+function render (props) {
   return <div className={ prefix }>
     <div className="error">{
       props.error ? 'error!' : ''

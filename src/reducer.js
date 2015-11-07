@@ -1,4 +1,4 @@
-import { handleActions } from 'redux-actions'
+const { handleActions } = require('redux-actions')
 
 const {
   RECEIVE_ROUTE,

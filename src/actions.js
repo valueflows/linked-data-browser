@@ -1,13 +1,13 @@
-import { createAction } from 'redux-actions'
-import Url from 'url'
-import QueryString from 'querystring'
-import { bind } from 'redux-effects'
-import { getUrl, setUrl, bindUrl } from 'redux-effects-location'
+const { createAction } = require('redux-actions')
+const Url = require('url')
+const QueryString = require('querystring')
+const { bind } = require('redux-effects')
+const { getUrl, setUrl, bindUrl } = require('redux-effects-location')
 
-import { fetch } from './effects/fetch'
-import { parse } from './effects/parse'
-import actionTypes from './action-types'
-import parseRoute from './util/parse-route'
+const { fetch } = require('./effects/fetch')
+const { parse } = require('./effects/parse')
+const actionTypes = require('./action-types')
+const parseRoute = require('./util/parse-route')
 
 const receiveRoute = createAction(actionTypes.RECEIVE_ROUTE)
 

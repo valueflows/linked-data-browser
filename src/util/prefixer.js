@@ -1,10 +1,12 @@
-import { Util as N3Util } from 'n3'
+const N3 = require('n3')
 
-export default function createPrefixer (prefixes) {
+module.exports = createPrefixer
+
+function createPrefixer (prefixes) {
   prefixes = prefixes || {}
 
   return (value) => {
-    if (!N3Util.isIRI(value)) {
+    if (!N3.Util.isIRI(value)) {
       return value
     }
     Object.keys(prefixes).forEach((prefix) => {

@@ -1,15 +1,15 @@
-import vdux from 'vdux'
-import { listen } from 'virtual-component'
-import { handleOnce } from 'redux-effects-events'
-import { getUrl, setUrl, bindUrl } from 'redux-effects-location'
-import el from 'vdom-element'
-import QueryString from 'querystring'
+const vdux = require('vdux')
+const { listen } = require('virtual-component')
+const { handleOnce } = require('redux-effects-events')
+const { getUrl, setUrl, bindUrl } = require('redux-effects-location')
+const el = require('vdom-element')
+const QueryString = require('querystring')
 
-import createStore from './store'
-import App from './app'
-import { getProps } from './getters'
-import { receiveRoute, initRoute } from './actions'
-import parseRoute from './util/parse-route'
+const createStore = require('./store')
+const App = require('./app')
+const { getProps } = require('./getters')
+const { receiveRoute, initRoute } = require('./actions')
+const parseRoute = require('./util/parse-route')
 
 const store = createStore({
   route: {},

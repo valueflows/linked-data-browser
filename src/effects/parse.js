@@ -1,8 +1,8 @@
-import { createAction } from 'redux-actions'
-import { Util as N3Util, Parser as N3Parser, Store as N3Store } from 'n3'
-import { promises as JsonLd } from 'jsonld'
+const { createAction } = require('redux-actions')
+const N3 = require('n3')
+const JsonLd = require('jsonld').promises
 
-import createUrlify from '../util/urlify'
+const createUrlify = require('../util/urlify')
 
 const PARSE = 'EFFECT_PARSE'
 
@@ -54,7 +54,7 @@ function parserByFormat (format) {
     case 'application/ntriples':
     case 'application/n-quads':
     case 'application/nquads':
-      var parser = N3Parser({ format })
+      var parser = N3.Parser({ format })
       return ({ content, url }) => {
         return new Promise((resolve, reject) => {
           var quads = []
@@ -118,8 +118,8 @@ function processContext (contexts) {
 
 const parse = createAction(PARSE)
  
-export default parseMiddleware
-export { parse }
+module.exports = parseMiddleware
+module.exports.parse = parse
 
 // TODO util-ify
 function defaultQuadGraph (graph) {

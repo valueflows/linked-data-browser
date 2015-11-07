@@ -1,13 +1,13 @@
-import { createStore, applyMiddleware } from 'redux'
-import reducer from './reducer'
-import effects from 'redux-effects'
-import events from 'redux-effects-events'
-import location from 'redux-effects-location'
-import fetch from './effects/fetch'
-import parse from './effects/parse'
-import multi from 'redux-multi'
-import thunk from 'redux-thunk'
-import logger from 'redux-logger'
+const { createStore, applyMiddleware } = require('redux')
+const reducer = require('./reducer')
+const effects = require('redux-effects').default
+const events = require('redux-effects-events').default
+const location = require('redux-effects-location').default
+const fetch = require('./effects/fetch')
+const parse = require('./effects/parse')
+const multi = require('redux-multi')
+const thunk = require('redux-thunk')
+const logger = require('redux-logger')
 
 module.exports = configureStore
 

@@ -1,7 +1,7 @@
-import { createSelector, createStructuredSelector } from 'reselect'
-import { Store } from 'n3'
-import lod from 'linkeddata-vocabs'
-import createPrefixer from './util/prefixer'
+const { createSelector, createStructuredSelector } = require('reselect')
+const { Store } = require('n3')
+const lod = require('linkeddata-vocabs')
+const createPrefixer = require('./util/prefixer')
 
 const getPrefixes = state => state.prefixes
 
@@ -83,7 +83,7 @@ const getView = createSelector(
 // TODO subClasses (by class)
 // TODO superClasses (by class)
 
-export const getProps = createStructuredSelector({
+const getProps = createStructuredSelector({
   prefixer: getPrefixer,
   graphs: getGraphs,
   quads: getQuads,
@@ -97,3 +97,7 @@ export const getProps = createStructuredSelector({
   viewId: getViewId,
   view: getView
 })
+
+module.exports = {
+  getProps
+}

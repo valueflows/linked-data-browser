@@ -1,4 +1,4 @@
-import createActionTypes from 'create-action-types'
+const createActionTypes = require('create-action-types')
 
 const actionTypes = createActionTypes([
   'RECEIVE_ROUTE',
