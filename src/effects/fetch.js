@@ -8,17 +8,19 @@ const FETCH = 'EFFECT_FETCH'
 
 function fetchMiddleware ({ dispatch, getState }) {
   return next => action => {
+    if (action.type !== FETCH) {
+      return next(action)
+    }
+
     const urlify = createUrlify(action.payload.url)
 
-    return action.type === FETCH
-      ? isofetch(action.payload.url, action.payload.params)
-        .then(checkStatus)
-        .then(blobify)
-        .then(textify)
-        .catch((error) => {
-          throw urlify({ error })
-        })
-      : next(action)
+    return isofetch(action.payload.url, action.payload.params)
+      .then(checkStatus)
+      .then(blobify)
+      .then(textify)
+      .catch((error) => {
+        throw urlify({ error })
+      })
     }
 }
 

@@ -13,33 +13,30 @@ const receiveRoute = createAction(actionTypes.RECEIVE_ROUTE)
 
 function selectRoute (route) {
   const queryString = QueryString.stringify(route)
-  return [
-    setUrl(`./?${queryString}`),
-    receiveRoute(route)
-  ]
+  return receiveRoute(route)
 }
 
-function setupRouter () {
-  return [
-    bind(
-      getUrl(),
-      (url) => {
-        console.log("url", url)
-        const route = Object.assign({
-          focusId: 'https://rawgit.com/valueflows/agent/master/examples/enspiral.jsonld'
-        }, parseRoute(url))
-        return receiveRoute(route)
-      },
-      setError
-    ),
-    bindUrl((url) => {
-      return receiveRoute(parseRoute(url))
-    })
-  ]
+function initRoute () {
+  return bind(
+    getUrl(),
+    (url) => {
+      console.log("url", url)
+      const route = Object.assign({
+        viewId: 'nodeList',
+        focusId: 'https://rawgit.com/valueflows/agent/master/examples/enspiral.jsonld'
+      }, parseRoute(url))
+      return receiveRoute(route)
+    },
+    setError
+  )
 }
 
 function selectFocus (focusId) {
   return selectRoute({ focusId })
+}
+
+function selectView (viewId) {
+  return selectRoute({ viewId })
 }
 
 const requestGraph = createAction(actionTypes.REQUEST_GRAPH)
@@ -109,9 +106,11 @@ function parseGraph (graph) {
 }
 
 module.exports = {
-  setupRouter,
+  initRoute,
+  receiveRoute,
   selectRoute,
   selectFocus,
+  selectView,
   loadGraph
 }
 

@@ -67,6 +67,22 @@ const getFocus  = createSelector(
   }
 )
 
+
+const getViews = state => state.views
+
+const getViewId = createSelector(
+  getRoute, (route) => route.viewId    
+)
+const getView = createSelector(
+  getViews, getViewId,
+  (views, viewId) => views[viewId]
+)
+
+// TODO subProperties (by property)
+// TODO superProperties (by property)
+// TODO subClasses (by class)
+// TODO superClasses (by class)
+
 export const getProps = createStructuredSelector({
   prefixer: getPrefixer,
   graphs: getGraphs,
@@ -76,5 +92,8 @@ export const getProps = createStructuredSelector({
   nodes: getNodes,
   focusId: getFocusId,
   focus: getFocus,
-  route: getRoute
+  route: getRoute,
+  views: getViews,
+  viewId: getViewId,
+  view: getView
 })

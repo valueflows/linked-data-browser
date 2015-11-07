@@ -8,15 +8,17 @@ const PARSE = 'EFFECT_PARSE'
 
 function parseMiddleware ({ dispatch, getState }) {
   return next => action => {
+    if (action.type !== PARSE) {
+      return next(action)
+    }
+
     const urlify = createUrlify(action.payload.url)
 
-    return action.type === PARSE
-      ? parserByFormat(action.payload.type)(action.payload)
-        .then(urlify)
-        .catch((error) => {
-          throw urlify({ error })
-        })
-      : next(action)
+    return parserByFormat(action.payload.type)(action.payload)
+      .then(urlify)
+      .catch((error) => {
+        throw urlify({ error })
+      })
   }
 }
 
