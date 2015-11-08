@@ -1,5 +1,6 @@
 const vdux = require('vdux')
 const { listen } = require('virtual-component')
+const { bind } = require('redux-effects')
 const { handleOnce } = require('redux-effects-events')
 const { getUrl, setUrl, bindUrl } = require('redux-effects-location')
 const el = require('vdom-element')
@@ -8,7 +9,7 @@ const QueryString = require('querystring')
 const createStore = require('./store')
 const App = require('./app')
 const { getProps } = require('./getters')
-const { receiveRoute, initRoute } = require('./actions')
+const { receiveRoute, setupRouter } = require('./actions')
 const parseRoute = require('./util/parse-route')
 
 const store = createStore({
@@ -30,7 +31,7 @@ const store = createStore({
 
 store.dispatch(handleOnce('domready', () => {
   listen(store.dispatch)
-  setupRouter(store)
+  store.dispatch(setupRouter())
 
   vdux(
     store,
@@ -42,16 +43,3 @@ store.dispatch(handleOnce('domready', () => {
     document.body
   )
 }))
-
-function setupRouter (store) {
-  store.dispatch(initRoute())
-  /*store.dispatch(bindUrl((url) => {
-    return receiveRoute(parseRoute(url))
-  }))*/
-  store.subscribe(() => {
-    const route = store.getState().route
-    const queryString = QueryString.stringify(route)
-    const nextUrl = `/?${queryString}`
-    store.dispatch(setUrl(nextUrl))
-  })
-}

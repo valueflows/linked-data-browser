@@ -12,15 +12,18 @@ const parseRoute = require('./util/parse-route')
 const receiveRoute = createAction(actionTypes.RECEIVE_ROUTE)
 
 function selectRoute (route) {
-  const queryString = QueryString.stringify(route)
-  return receiveRoute(route)
+  return (dispatch, getState) => {
+    const currentRoute = getState().route
+    const nextRoute = { ...currentRoute, ...route }
+    const queryString = QueryString.stringify(nextRoute)
+    return dispatch(setUrl(`/?${queryString}`))
+  }
 }
 
 function initRoute () {
   return bind(
     getUrl(),
     (url) => {
-      console.log("url", url)
       const route = Object.assign({
         viewId: 'nodeList',
         focusId: 'https://rawgit.com/valueflows/agent/master/examples/enspiral.jsonld'
@@ -29,6 +32,18 @@ function initRoute () {
     },
     setError
   )
+}
+
+function bindRoute () {
+  return bindUrl((url) => {
+    console.log("bind url", url)
+    const route = parseRoute(url)
+    return receiveRoute(route)
+  })
+}
+
+function setupRouter () {
+  return [initRoute(), bindRoute()]
 }
 
 function selectFocus (focusId) {
@@ -106,7 +121,7 @@ function parseGraph (graph) {
 }
 
 module.exports = {
-  initRoute,
+  setupRouter,
   receiveRoute,
   selectRoute,
   selectFocus,
