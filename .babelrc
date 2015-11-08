@@ -4,6 +4,7 @@
   ],
   "plugins": [
     ["transform-react-jsx", { "pragma": "el" }],
-    "transform-object-rest-spread"
+    "transform-object-rest-spread",
+    "transform-runtime"
   ]
 }
