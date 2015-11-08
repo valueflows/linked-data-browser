@@ -1,3 +1,4 @@
+/** @jsx el */
 const el = require('vdom-element')
 const sheetify = require('sheetify')
 
@@ -11,12 +12,12 @@ function render (props) {
   return (
     <div className={prefix}>
       <label
-        className="label"
+        className='label'
         htmlFor={focusId}
-      >{ "focus @id" }</label>
+      >{ 'focus @id' }</label>
       <input
-        className="select"
-        type="url"
+        className='select'
+        type='url'
         value={focusId}
         key={focusId}
         ev-change={ e => onSelect(e.target.value) }

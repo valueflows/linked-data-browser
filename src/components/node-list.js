@@ -1,8 +1,8 @@
+/** @jsx el */
 const el = require('vdom-element')
 const sheetify = require('sheetify')
 const N3 = require('n3')
 const map = require('lodash.map')
-const mapValues = require('lodash.mapvalues')
 
 const prefix = sheetify('./node-list.css')
 
@@ -17,29 +17,29 @@ function render (props) {
 function renderNodes (props) {
   const { nodes } = props
 
-  return <ul className="list">{
+  return <ul className='list'>{
     nodes ? map(nodes, (node, nodeId) => {
-      return renderNode({ ...props, node, nodeId, })
+      return renderNode({ ...props, node, nodeId })
     }) : null
   }</ul>
 }
 
-function renderNode(props) {
-  const { node, nodeId, prefixer } = props
+function renderNode (props) {
+  const { node, nodeId } = props
 
-  return <li className="item">
-    <h2 className="subject">
+  return <li className='item'>
+    <h2 className='subject'>
       { renderLink({ ...props, link: nodeId }) }
     </h2>
-    <ul className="predicates">{
+    <ul className='predicates'>{
       map(node, (objects, predicate) => {
-        return <li className="predicate-objects">
-          <h3 className="predicate">
+        return <li className='predicate-objects'>
+          <h3 className='predicate'>
             { renderLink({ ...props, link: predicate }) }
           </h3>
-          <ul className="objects">{
+          <ul className='objects'>{
             objects.map((object) => {
-              return <li className="object">
+              return <li className='object'>
                 { renderLink({ ...props, link: object }) }
               </li>
             })
@@ -55,15 +55,15 @@ function renderLink (props) {
 
   const isLink = N3.Util.isIRI(link)
 
-  const onClick =  isLink ?
-    onClickLink(props) : noop
+  const onClick = isLink
+    ? onClickLink(props) : noop
 
   const style = {
     cursor: isLink ? 'pointer' : undefined
   }
 
   return <a
-    className="link"
+    className='link'
     style={style}
     ev-click={onClick}
   >

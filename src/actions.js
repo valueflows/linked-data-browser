@@ -36,7 +36,6 @@ function initRoute () {
 
 function bindRoute () {
   return bindUrl((url) => {
-    console.log("bind url", url)
     const route = parseRoute(url)
     return receiveRoute(route)
   })

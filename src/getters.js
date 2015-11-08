@@ -57,7 +57,7 @@ const getFocusId = createSelector(
   (route) => route.focusId
 )
 
-const getFocus  = createSelector(
+const getFocus = createSelector(
   getFocusId,
   getNodes,
   (focusId, nodes) => {
@@ -67,11 +67,10 @@ const getFocus  = createSelector(
   }
 )
 
-
 const getViews = state => state.views
 
 const getViewId = createSelector(
-  getRoute, (route) => route.viewId    
+  getRoute, (route) => route.viewId
 )
 const getView = createSelector(
   getViews, getViewId,

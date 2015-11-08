@@ -1,7 +1,7 @@
+/** @jsx el */
 const el = require('vdom-element')
 const sheetify = require('sheetify')
 const map = require('lodash.map')
-const mapValues = require('lodash.mapvalues')
 
 const prefix = sheetify('./graph-list.css')
 
@@ -9,19 +9,19 @@ module.exports = render
 
 function render (props) {
   return <div className={ prefix }>
-    <div className="error">{
+    <div className='error'>{
       props.error ? 'error!' : ''
     }</div>
-    <ul className="list">{
+    <ul className='list'>{
       map(props.graphs, (graph, id) => {
         const statusName = getStatusName(graph)
         const statusStyle = getStatusStyle(statusName)
 
-        return <li className="item">
-          <span className="id">
+        return <li className='item'>
+          <span className='id'>
             { id }
           </span>
-          <span className="status"
+          <span className='status'
             style={statusStyle}
           >{ statusName }</span>
         </li>
@@ -44,12 +44,12 @@ function getStatusName ({ error, content, redirect }) {
 
 function getStatusStyle (statusName) {
   switch (statusName) {
-    case 'errored': 
-      return { 
+    case 'errored':
+      return {
         color: 'red'
       }
     case 'loading':
-      return { 
+      return {
         color: 'blue'
       }
     case 'redirect':
@@ -57,7 +57,7 @@ function getStatusStyle (statusName) {
         color: 'black'
       }
     case 'success':
-      return { 
+      return {
         color: 'green'
       }
   }

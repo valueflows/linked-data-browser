@@ -14,7 +14,7 @@ const reducer = handleActions({
   [RECEIVE_ROUTE]: (state, action) => {
     return {
       ...state,
-      route: Object.assign({}, state.route, action.payload),
+      route: Object.assign({}, state.route, action.payload)
     }
   },
   [REQUEST_GRAPH]: (state, action) => {
@@ -62,7 +62,7 @@ const reducer = handleActions({
   [RECEIVE_PREFIXES]: (state, action) => {
     return {
       ...state,
-      prefixes: Object.assign({}, state.prefixes, action.payload),
+      prefixes: Object.assign({}, state.prefixes, action.payload)
     }
   },
   [SET_ERROR]: (state, action) => {

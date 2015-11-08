@@ -1,3 +1,4 @@
+/** @jsx el */
 import el from 'vdom-element'
 const sheetify = require('sheetify')
 import map from 'lodash.map'
@@ -10,13 +11,13 @@ function render (props) {
   return (
     <div className={ prefix }>
       <label
-        className="label"
-        htmlFor="view"
-      >{ "view as:" }</label>
+        className='label'
+        htmlFor='view'
+      >{ 'view as:' }</label>
       <select
-        className="select"
-        id="view"
-        name="view"
+        className='select'
+        id='view'
+        name='view'
         ev-change={ e => onSelect(e.target.value) }
       >{
         map(views, (viewOption, viewOptionId) =>

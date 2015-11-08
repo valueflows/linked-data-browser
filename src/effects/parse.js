@@ -1,3 +1,4 @@
+/* global fetch */
 const { createAction } = require('redux-actions')
 const N3 = require('n3')
 const JsonLd = require('jsonld').promises
@@ -117,7 +118,7 @@ function processContext (contexts) {
 }
 
 const parse = createAction(PARSE)
- 
+
 module.exports = parseMiddleware
 module.exports.parse = parse
 
