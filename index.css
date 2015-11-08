@@ -2,27 +2,3 @@ html, body {
   padding: 0;
   margin: 0;
 }
-
-.Focus-container {
-  width: 100%;
-}
-
-.Focus-label {
-  width: 20%;
-}
-
-.Focus-select {
-  width: 80%;
-}
-
-input :valid {
-  border: solid green 1px;
-}
-
-input :invalid {
-  border: solid red 1px;
-}
-
-.GraphList-id, .GraphList-status {
-  padding: 10px;
-}
