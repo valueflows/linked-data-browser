@@ -16,7 +16,7 @@ function selectRoute (route) {
     const currentRoute = getState().route
     const nextRoute = { ...currentRoute, ...route }
     const queryString = QueryString.stringify(nextRoute)
-    return dispatch(setUrl(`/?${queryString}`))
+    return dispatch(setUrl(`./?${queryString}`))
   }
 }
 
