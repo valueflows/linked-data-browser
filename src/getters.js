@@ -57,15 +57,15 @@ const getSubProperties = createRelation(
 )
 
 const getSuperProperties = createRelation(
-  findIncoming, lod.rdfs.subPropertyOf
+  findOutgoing, lod.rdfs.subPropertyOf
 )
 
 const getSubClasses = createRelation(
-  findIncoming, lod.rdfs.subPropertyOf
+  findIncoming, lod.rdfs.subClassOf
 )
 
 const getSuperClasses = createRelation(
-  findIncoming, lod.rdfs.subPropertyOf
+  findOutgoing, lod.rdfs.subClassOf
 )
 
 const getRoute = state => state.route
@@ -138,17 +138,21 @@ function collect (store, node, findFn, ...args) {
 
 function collectStep (store, node, sofar, findFn, ...args) {
   const nextNodes = findFn(store, node, ...args)
-    .filter((node) => sofar.indexOf(node) > -1)
+    .filter((node) => {
+      return sofar.indexOf(node) === -1
+    })
 
   if (nextNodes.length === 0) {
     return []
   }
 
-  return uniq(flatten(
-    nextNodes.map((nextNode) => {
-      return collect(store, findFn, nextNode, ...args)
-    })
-  ))
+  return nextNodes.concat(
+    uniq(flatten(
+      nextNodes.map((nextNode) => {
+        return collectStep(store, nextNode, sofar, findFn, ...args)
+      })
+    ))
+  )
 }
 
 function findOutgoingQuads (store, node, predicate) {
