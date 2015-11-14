@@ -9,7 +9,7 @@
     "lint": "snazzy",
     "format": "snazzy --format",
     "test": "browserify test.js | smokestack | tap-spec",
-    "dist": "mkdir -p dist && bash -c 'cp *.{js,html,css} dist'",
+    "dist": "mkdir -p dist && bash -c 'cp *.{js,html} dist'",
     "push": "gh-pages -d dist",
     "deploy": "npm run build && npm run dist && npm run push"
   },
