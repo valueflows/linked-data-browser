@@ -1,10 +1,13 @@
 /** @jsx el */
 const el = require('vdom-element')
+const sheetify = require('sheetify')
 
 const { selectFocus, selectView, loadGraph } = require('./actions')
 const FocusSelector = require('./components/focus-selector')
 const ViewSelector = require('./components/view-selector')
 const GraphList = require('./components/graph-list')
+
+const prefix = sheetify('./app.css')
 
 module.exports = {
   beforeMount,
@@ -31,7 +34,7 @@ function render (props) {
   }
 
   return (
-    <div>
+    <div className={prefix}>
       <FocusSelector { ...props } focusId={focusId} onSelect={selectFocus} />
       <GraphList { ...props } />
       <ViewSelector { ...props } onSelect={selectView} />
